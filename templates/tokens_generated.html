@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Token Berhasil Dibuat{% endblock %}
+{% block content %}
+<div class="section-title">
+  <div><div class="badge">TOKEN BARU</div><h1>Token Berhasil Dibuat</h1><p>Simpan atau cetak daftar token berikut dan bagikan masing-masing kepada pemilih.</p></div>
+  <button class="btn primary" onclick="window.print()">Cetak</button>
+</div>
+<div class="token-sheet">
+{% for token in tokens %}
+<div class="token-item"><span>{{ loop.index }}</span><code>{{ token }}</code></div>
+{% endfor %}
+</div>
+<div class="print-note">Setiap token hanya dapat digunakan satu kali.</div>
+<a class="btn" href="{{ url_for('admin_dashboard') }}">Kembali ke Dashboard</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Voting Ditutup{% endblock %}
+{% block content %}
+<div class="form-card narrow center">
+  <div class="closed-icon">!</div>
+  <h1>Voting Ditutup</h1>
+  <p>Saat ini voting sedang tidak dibuka oleh panitia.</p>
+  <a class="btn" href="{{ url_for('index') }}">Kembali</a>
+</div>
+{% endblock %}

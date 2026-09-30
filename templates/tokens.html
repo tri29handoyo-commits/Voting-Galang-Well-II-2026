@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Daftar Token{% endblock %}
+{% block content %}
+<div class="section-title">
+  <div><div class="badge">ADMIN</div><h1>Daftar Token</h1><p>Bagikan token yang belum terpakai kepada pemilih.</p></div>
+  <a class="btn" href="{{ url_for('admin_dashboard') }}">← Dashboard</a>
+</div>
+<div class="panel">
+<table>
+<thead><tr><th>No.</th><th>Token</th><th>Status</th><th>Waktu Digunakan</th></tr></thead>
+<tbody>
+{% for t in tokens %}
+<tr>
+<td>{{ loop.index }}</td>
+<td><code>{{ t.token }}</code></td>
+<td><span class="status {{ 'used' if t.used else 'unused' }}">{{ 'TERPAKAI' if t.used else 'BELUM DIGUNAKAN' }}</span></td>
+<td>{{ t.used_at or '-' }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

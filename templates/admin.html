@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<div class="admin-head">
+  <div>
+    <div class="badge">ADMINISTRATOR</div>
+    <h1>Dashboard Voting</h1>
+    <p>Kelola peserta, token, dan hasil voting.</p>
+  </div>
+  <form method="post" action="{{ url_for('toggle_voting') }}">
+    <button class="btn {{ 'danger' if voting_is_open else 'primary' }}">{{ 'Tutup Voting' if voting_is_open else 'Buka Voting' }}</button>
+  </form>
+</div>
+
+<div class="stats">
+  <div class="stat"><span>Total Suara</span><b>{{ total_votes }}</b></div>
+  <div class="stat"><span>Total Token</span><b>{{ total_tokens }}</b></div>
+  <div class="stat"><span>Token Terpakai</span><b>{{ used_tokens }}</b></div>
+  <div class="stat"><span>Status</span><b class="{{ 'green' if voting_is_open else 'red' }}">{{ 'BUKA' if voting_is_open else 'TUTUP' }}</b></div>
+</div>
+
+<div class="admin-grid">
+<section class="panel">
+  <h2>Buat Token</h2>
+  <p>Buat token unik yang masing-masing hanya bisa dipakai satu kali.</p>
+  <form method="post" action="{{ url_for('generate_tokens') }}" class="inline-form">
+    <input type="number" name="amount" min="1" max="1000" value="10" required>
+    <button class="btn primary">Generate Token</button>
+  </form>
+  <a class="text-link" href="{{ url_for('tokens') }}">Lihat semua token →</a>
+</section>
+
+<section class="panel">
+  <h2>Tambah Peserta</h2>
+  <form method="post" action="{{ url_for('add_candidate') }}">
+    <label>Nama peserta/calon</label>
+    <input name="name" placeholder="Nama lengkap" required>
+    <label>Deskripsi (opsional)</label>
+    <input name="description" placeholder="Contoh: Nomor urut 01">
+    <label>URL foto (opsional)</label>
+    <input name="photo" placeholder="https://...">
+    <button class="btn primary">Tambah Peserta</button>
+  </form>
+</section>
+</div>
+
+<section class="panel">
+  <div class="section-title">
+    <div><h2>Hasil Voting</h2><p>Perolehan suara peserta saat ini.</p></div>
+  </div>
+  {% if candidates %}
+  <div class="results">
+    {% set max_votes = candidates|map(attribute='votes')|max %}
+    {% for c in candidates %}
+    <div class="result-row">
+      <div class="result-name">
+        <b>{{ c.name }}</b>
+        <span>{{ c.votes }} suara</span>
+      </div>
+      <div class="bar"><div style="width: {{ (c.votes / max_votes * 100) if max_votes else 0 }}%"></div></div>
+      <div class="result-actions">
+        <form method="post" action="{{ url_for('toggle_candidate', candidate_id=c.id) }}">
+          <button class="small-btn">{{ 'Nonaktifkan' if c.active else 'Aktifkan' }}</button>
+        </form>
+        {% if c.votes == 0 %}
+        <form method="post" action="{{ url_for('delete_candidate', candidate_id=c.id) }}" onsubmit="return confirm('Hapus peserta ini?')">
+          <button class="small-btn danger-text">Hapus</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>Belum ada peserta. Tambahkan peserta melalui formulir di atas.</p>
+  {% endif %}
+</section>
+
+<section class="panel warning-panel">
+  <h2>Reset Data Voting</h2>
+  <p>Gunakan hanya untuk <b>uji coba</b>. Tindakan ini menghapus seluruh suara dan mengembalikan semua token menjadi belum digunakan.</p>
+  <form method="post" action="{{ url_for('reset_demo') }}" onsubmit="return confirm('Yakin ingin menghapus semua suara? Tindakan ini tidak dapat dibatalkan.')">
+    <button class="btn danger">Reset Voting</button>
+  </form>
+</section>
+{% endblock %}

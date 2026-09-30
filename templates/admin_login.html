@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login Admin{% endblock %}
+{% block content %}
+<div class="form-card narrow">
+  <div class="badge">PANITIA</div>
+  <h1>Login Admin</h1>
+  <form method="post">
+    <label>Username</label>
+    <input name="username" required autocomplete="username">
+    <label>Password</label>
+    <input type="password" name="password" required autocomplete="current-password">
+    <button class="btn primary" type="submit">Masuk Dashboard</button>
+  </form>
+  <a class="back" href="{{ url_for('index') }}">← Kembali</a>
+</div>
+{% endblock %}

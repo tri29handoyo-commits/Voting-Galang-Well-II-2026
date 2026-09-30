@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Masukkan Token{% endblock %}
+{% block content %}
+<div class="form-card narrow">
+  <div class="badge">TAHAP 1</div>
+  <h1>Masukkan Token</h1>
+  <p>Gunakan token yang diberikan oleh panitia.</p>
+  <form method="post">
+    <label>Token Voting</label>
+    <input name="token" maxlength="32" placeholder="CONTOH: A7K9P2QX" autocomplete="off" required autofocus>
+    <button class="btn primary" type="submit">Validasi Token</button>
+  </form>
+  <a class="back" href="{{ url_for('index') }}">← Kembali</a>
+</div>
+{% endblock %}

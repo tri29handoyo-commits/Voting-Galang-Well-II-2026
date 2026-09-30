@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Voting Online{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="badge">PEMILIHAN ONLINE</div>
+  <h1>Gunakan Hak Suara Anda</h1>
+  <p>Masukkan token yang diberikan panitia untuk melakukan voting. Setiap token hanya dapat digunakan satu kali.</p>
+  {% if open %}
+  <a class="btn primary big" href="{{ url_for('vote') }}">Mulai Voting</a>
+  {% else %}
+  <div class="closed">Voting sedang ditutup oleh panitia.</div>
+  {% endif %}
+</section>
+<div class="info-grid">
+  <div class="card"><b>1.</b><span>Dapatkan token dari panitia.</span></div>
+  <div class="card"><b>2.</b><span>Masukkan token pada halaman voting.</span></div>
+  <div class="card"><b>3.</b><span>Pilih satu peserta dan konfirmasi.</span></div>
+</div>
+{% endblock %}

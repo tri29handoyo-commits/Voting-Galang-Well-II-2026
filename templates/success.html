@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Voting Berhasil{% endblock %}
+{% block content %}
+<div class="success-card">
+  <div class="success-icon">✓</div>
+  <h1>Voting Berhasil!</h1>
+  <p>Suara Anda telah tersimpan. Token yang digunakan sudah otomatis ditandai sebagai <b>TERPAKAI</b>.</p>
+  <a class="btn primary" href="{{ url_for('index') }}">Kembali ke Beranda</a>
+</div>
+{% endblock %}

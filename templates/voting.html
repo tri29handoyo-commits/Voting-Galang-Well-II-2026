@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Pilih Peserta{% endblock %}
+{% block content %}
+<div class="voting-head">
+  <div class="badge">TAHAP 2</div>
+  <h1>Pilih Peserta</h1>
+  <p>Pilih <b>satu</b> peserta. Setelah dikonfirmasi, suara tidak dapat dibatalkan.</p>
+</div>
+<form method="post" action="{{ url_for('submit_vote') }}" onsubmit="return confirmVote()">
+  <div class="candidates">
+    {% for c in candidates %}
+    <label class="candidate">
+      <input type="radio" name="candidate_id" value="{{ c.id }}" required>
+      {% if c.photo %}
+      <img src="{{ c.photo }}" alt="{{ c.name }}">
+      {% else %}
+      <div class="avatar">{{ loop.index }}</div>
+      {% endif %}
+      <div class="candidate-info">
+        <h2>{{ c.name }}</h2>
+        {% if c.description %}<p>{{ c.description }}</p>{% endif %}
+      </div>
+      <span class="check">✓</span>
+    </label>
+    {% endfor %}
+  </div>
+  <button class="btn primary big full" type="submit">Kirim Suara</button>
+</form>
+<script>
+function confirmVote() {
+  const selected = document.querySelector('input[name="candidate_id"]:checked');
+  if (!selected) return false;
+  return confirm("Yakin dengan pilihan Anda? Suara yang sudah dikirim tidak dapat diubah.");
+}
+</script>
+{% endblock %}
